@@ -29,6 +29,7 @@ function UserInformation() {
   const [commentData, setCommentData] = useState<any>(null);
   const [documentData, setDocumentData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [url, setUrl] = useState<any>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +42,12 @@ function UserInformation() {
             creationData.studentNumber.toLowerCase()
           );
         });
+        console.log(filterDocumentData);
+        const validString = creationData.link;
+
+        const splitText = validString.split(",");
+
+        setUrl(splitText);
 
         setData(creationData);
         setCommentData(comment);
@@ -53,7 +60,7 @@ function UserInformation() {
     };
     fetchData();
   }, [params.id]);
-  console.log(data);
+
   if (loading) {
     return (
       <section className="w-full h-screen flex justify-center items-center">
@@ -75,25 +82,21 @@ function UserInformation() {
             <CommentDialog name={data.studentName} uuid={params.id} />
           </div>
           <section className="flex flex-col gap-2 text-[14px] text-[#4d5053]">
-            <div className="flex gap-2 items-center">
-              <FaGithub />
-              <a
-                href="https://github.com/Ochirsukh0819"
-                className="cursor-pointer"
-              >
-                https://github.com/Ochirsukh0819
-              </a>
-            </div>
-            <div className="flex gap-2 items-center ">
-              <GiCurledLeaf />
-              <a
-                href="https://github.com/Ochirsukh0819"
-                className="cursor-pointer"
-              >
-                https://github.com/Ochirsukh0819
-              </a>
-            </div>
+            {url.map((link: any, index: any) => (
+              <div key={index} className="flex gap-2 items-center">
+                <GiCurledLeaf />
+                <a
+                  href={link}
+                  className="cursor-pointer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link}
+                </a>
+              </div>
+            ))}
           </section>
+
           <section className="flex flex-col gap-2 mt-4">
             <h2 className=" font-bold">Миний бүтээлийн тухай</h2>
             <p className="text-[#4d5053] text-wrap  md:text-[1rem] text-[0.9rem]">

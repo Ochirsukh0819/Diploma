@@ -100,7 +100,7 @@ export async function login({ email, password }: LoginInput): Promise<string> {
 export async function changePassword({
   email,
 }: newpasswordType): Promise<string> {
-  console.log("emaiL: ", email);
+ 
   try {
     const res = sendPasswordResetEmail(auth, email)
       .then(() => {

@@ -23,11 +23,13 @@ export default function Home() {
             image={TeacheImage}
           />
         </Link>
-        <ThreeDCardDemo
-          title="Бичиг баримт"
-          content="Тэнхимээс баталгаажсан бичиг баримт"
-          image={DocumentImage}
-        />
+        <Link href="/document">
+          <ThreeDCardDemo
+            title="Бичиг баримт"
+            content="Тэнхимээс баталгаажсан бичиг баримт"
+            image={DocumentImage}
+          />
+        </Link>
         <ThreeDCardDemo
           title="Оюутан"
           content="Оюутны бүтээлтэй танилцаарай"

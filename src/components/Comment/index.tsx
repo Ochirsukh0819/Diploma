@@ -16,7 +16,7 @@ interface CommentType {
 }
 
 function Comments({ data }: CommentType) {
-  console.log("dta: ", data);
+  
   return (
     <section className="mt-10 w-[100%]  bg-[#00283D]">
       <div className="w-full flex justify-between items-center p-2">

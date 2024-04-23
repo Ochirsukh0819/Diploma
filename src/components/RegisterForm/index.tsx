@@ -38,7 +38,7 @@ function Registerform() {
                     password,
                     studentId,
                   });
-                  console.log("res: ", res);
+               
                   if (res.success) {
                     toast.success("Амжилттай бүртгэгдлээ");
                     router.push("/login");

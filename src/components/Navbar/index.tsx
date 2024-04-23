@@ -19,34 +19,27 @@ function classNames(...classes: any) {
 export default function Navbar() {
   const router = useRouter();
   const { logout, user } = useUser();
-  const [activeLink, setActiveLink] = useState<number | null>(null);
+
   const [navigation, setNavigation] = useState([
     {
       name: "Нүүр хуудас",
       href: "/",
       current: true,
+      icons: false,
     },
     {
       name: "Бичиг баримт",
       href: "/document",
       current: false,
+      icons: false,
     },
 
     {
       name: "Удирдагч багш",
       href: "/teachers",
       current: false,
+      icons: false,
     },
-    ...(user?.token !== null
-      ? [
-          {
-            name: "Бүтээл үүсгэх",
-            href: "/upload",
-            icons: MdOutlineFileUpload,
-            current: false,
-          },
-        ]
-      : []),
   ]);
 
   const handleItemClick = (name: string) => {
@@ -59,14 +52,22 @@ export default function Navbar() {
   const pathName = usePathname();
 
   useEffect(() => {
-    console.log("params: ", pathName);
-
     const updatedNavigation = navigation.map((item) => ({
       ...item,
       current: item.href === pathName,
     }));
+
+    if (user?.token) {
+      updatedNavigation.push({
+        name: "Бүтээл үүсгэх",
+        href: "/upload",
+        icons: true,
+        current: false,
+      });
+    }
+
     setNavigation(updatedNavigation);
-  }, [pathName]);
+  }, [pathName, user?.token]);
 
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -91,7 +92,7 @@ export default function Navbar() {
                   {navigation.map((item, index) => (
                     <Link href={item.href} key={item.name}>
                       <div
-                        onClick={(event) => {
+                        onClick={() => {
                           handleItemClick(item.name);
                         }}
                         className={classNames(
@@ -102,9 +103,8 @@ export default function Navbar() {
                         )}
                       >
                         <div className="flex gap-2 items-center">
-                          {item.icons && (
+                          {item.icons === true && (
                             <div>
-                              {" "}
                               <MdOutlineFileUpload
                                 style={{ fontSize: "24px" }}
                               />

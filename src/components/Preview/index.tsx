@@ -8,11 +8,18 @@ import Documents from "@/components/Documents";
 import Comments from "@/components/Comment";
 import UserList from "@/components/UserList";
 import CommentDialog from "@/components/CommentDialog";
-import { getCreationId } from "@/api";
+import { getCreationId, getDocumentData, getStudentCreation } from "@/api";
 import { useUser } from "@/context/testContext";
 import { useParams } from "next/navigation";
 import StudentImage from "@/components/StudentImage";
-import { CarouselSpacing } from "@/components/Carousel";
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface PreviewType {
   text: string;
@@ -27,12 +34,34 @@ export function Preview({
   secondImage,
   thirdImage,
 }: PreviewType) {
-  console.log("fileUrl: ", firstImage);
   const imageUrl = firstImage ? URL.createObjectURL(firstImage) : "";
   const secondImageUrl = secondImage ? URL.createObjectURL(secondImage) : "";
   const thirdImageUrl = thirdImage ? URL.createObjectURL(thirdImage) : "";
 
   const { user } = useUser();
+
+  const [documentData, setDocumentData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await getDocumentData();
+        const filterDocumentData = result.filter((item: any) => {
+          return (
+            item.data.studentId.toLowerCase() === user?.studentId.toLowerCase()
+          );
+        });
+
+        setDocumentData(filterDocumentData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <section className="w-full h-screen flex justify-between  gap-x-8  mt-20 lg:px-0 sm:px-16">
       <section className="lg:w-[50%] w-[95%] flex flex-col gap-3">
@@ -96,44 +125,79 @@ export function Preview({
             </div>
           </section>
         </section>
-        <section className="mt-4 flex flex-col  gap-3">
-          <h2 className="font-bold">Баримт бичиг</h2>
-          <section className="flex flex-row gap-6 ">
-            <Documents
-              id="1"
-              fileUrl="https://storage.googleapis.com/diplomaadmin-a41c3.appspot.com/documents/%C3%90%C2%A5.%20%C3%90%C2%9E%C3%91%C2%87%C3%90%C2%B8%C3%91%C2%80%C3%91%C2%81%C3%92%C2%AF%C3%91%C2%85%20-%20Worki%20CV.pdf?GoogleAccessId=firebase-adminsdk-v6ryy%40diplomaadmin-a41c3.iam.gserviceaccount.com&Expires=1723996800&Signature=xuT31OOp0OM%2FMvXAd6c4VRjM1BCKzzk4Efi7EA%2BCfkFuFwXMZutRcWG1BkI5WwX1nBlC0cPKfuLG%2BinPMhrRdkazoTSVLGWN4TGtYLZv8LOHkCuBkEqSc2gLS70crha2nYlQNJA5xdBkhPhFVo1S6PbpEW3bxxd1Y2nO2bxKK%2BNbrRa1FHyufJZE7sE3ILWwUNrZX710T7k5Qdnr1SCUZ0f5yqEqDIaulELwi0FLvy14%2FFK5BhCmzHbSy1vqfmI0nJpMEfg8nfKQ%2BgbnlpV6suc76g7qS2ifZZBH1Y4yQEgmK4ZgVsgcnc9rAtm4n7oqOqUl1tT2Azze8xJwE36lig%3D%3D"
-              documentType="oojoo"
-              title="oojoo"
-              studentName="oojoo"
-              studentId="oojoo"
-              teacherName="oojoo"
-              rate="oojoo"
-              layout="vertical"
-            />
-            <Documents
-              id="1"
-              fileUrl="https://storage.googleapis.com/diplomaadmin-a41c3.appspot.com/documents/%C3%90%C2%A5.%20%C3%90%C2%9E%C3%91%C2%87%C3%90%C2%B8%C3%91%C2%80%C3%91%C2%81%C3%92%C2%AF%C3%91%C2%85%20-%20Worki%20CV.pdf?GoogleAccessId=firebase-adminsdk-v6ryy%40diplomaadmin-a41c3.iam.gserviceaccount.com&Expires=1723996800&Signature=xuT31OOp0OM%2FMvXAd6c4VRjM1BCKzzk4Efi7EA%2BCfkFuFwXMZutRcWG1BkI5WwX1nBlC0cPKfuLG%2BinPMhrRdkazoTSVLGWN4TGtYLZv8LOHkCuBkEqSc2gLS70crha2nYlQNJA5xdBkhPhFVo1S6PbpEW3bxxd1Y2nO2bxKK%2BNbrRa1FHyufJZE7sE3ILWwUNrZX710T7k5Qdnr1SCUZ0f5yqEqDIaulELwi0FLvy14%2FFK5BhCmzHbSy1vqfmI0nJpMEfg8nfKQ%2BgbnlpV6suc76g7qS2ifZZBH1Y4yQEgmK4ZgVsgcnc9rAtm4n7oqOqUl1tT2Azze8xJwE36lig%3D%3D"
-              documentType="oojoo"
-              title="oojoo"
-              studentName="oojoo"
-              studentId="oojoo"
-              teacherName="oojoo"
-              rate="oojoo"
-              layout="vertical"
-            />
-            <Documents
-              id="1"
-              fileUrl="https://storage.googleapis.com/diplomaadmin-a41c3.appspot.com/documents/%C3%90%C2%A5.%20%C3%90%C2%9E%C3%91%C2%87%C3%90%C2%B8%C3%91%C2%80%C3%91%C2%81%C3%92%C2%AF%C3%91%C2%85%20-%20Worki%20CV.pdf?GoogleAccessId=firebase-adminsdk-v6ryy%40diplomaadmin-a41c3.iam.gserviceaccount.com&Expires=1723996800&Signature=xuT31OOp0OM%2FMvXAd6c4VRjM1BCKzzk4Efi7EA%2BCfkFuFwXMZutRcWG1BkI5WwX1nBlC0cPKfuLG%2BinPMhrRdkazoTSVLGWN4TGtYLZv8LOHkCuBkEqSc2gLS70crha2nYlQNJA5xdBkhPhFVo1S6PbpEW3bxxd1Y2nO2bxKK%2BNbrRa1FHyufJZE7sE3ILWwUNrZX710T7k5Qdnr1SCUZ0f5yqEqDIaulELwi0FLvy14%2FFK5BhCmzHbSy1vqfmI0nJpMEfg8nfKQ%2BgbnlpV6suc76g7qS2ifZZBH1Y4yQEgmK4ZgVsgcnc9rAtm4n7oqOqUl1tT2Azze8xJwE36lig%3D%3D"
-              documentType="oojoo"
-              title="oojoo"
-              studentName="oojoo"
-              studentId="oojoo"
-              teacherName="oojoo"
-              rate="oojoo"
-              layout="vertical"
-            />
+        {
+          <section className="mt-4 flex flex-col  gap-3 ">
+            <h2 className="font-bold">Баримт бичиг</h2>
+            {documentData !== null ? (
+              <section className="flex flex-row gap-6 ">
+                <Carousel className="w-[95%] ">
+                  <CarouselContent>
+                    {documentData.map((item: any) => (
+                      <CarouselItem
+                        key={item.id}
+                        className="md:basis-1/4 lg:basis-1/6"
+                      >
+                        <Documents
+                          id={item.id}
+                          fileUrl={item.data.downloadUrl}
+                          documentType={item.data.documentType}
+                          title={item.data.title}
+                          studentName={item.data.studentName}
+                          studentId={item.data.studentId}
+                          teacherName={item.data.teacher}
+                          rate={item.data.rate}
+                          year={item.data.year}
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </Carousel>
+
+                {/* <Documents
+                    id="1"
+                    fileUrl="https://storage.googleapis.com/diplomaadmin-a41c3.appspot.com/documents/%C3%90%C2%A5.%20%C3%90%C2%9E%C3%91%C2%87%C3%90%C2%B8%C3%91%C2%80%C3%91%C2%81%C3%92%C2%AF%C3%91%C2%85%20-%20Worki%20CV.pdf?GoogleAccessId=firebase-adminsdk-v6ryy%40diplomaadmin-a41c3.iam.gserviceaccount.com&Expires=1723996800&Signature=xuT31OOp0OM%2FMvXAd6c4VRjM1BCKzzk4Efi7EA%2BCfkFuFwXMZutRcWG1BkI5WwX1nBlC0cPKfuLG%2BinPMhrRdkazoTSVLGWN4TGtYLZv8LOHkCuBkEqSc2gLS70crha2nYlQNJA5xdBkhPhFVo1S6PbpEW3bxxd1Y2nO2bxKK%2BNbrRa1FHyufJZE7sE3ILWwUNrZX710T7k5Qdnr1SCUZ0f5yqEqDIaulELwi0FLvy14%2FFK5BhCmzHbSy1vqfmI0nJpMEfg8nfKQ%2BgbnlpV6suc76g7qS2ifZZBH1Y4yQEgmK4ZgVsgcnc9rAtm4n7oqOqUl1tT2Azze8xJwE36lig%3D%3D"
+                    documentType="oojoo"
+                    title="oojoo"
+                    studentName="oojoo"
+                    studentId="oojoo"
+                    teacherName="oojoo"
+                    rate="oojoo"
+                    layout="vertical"
+                  />
+                  <Documents
+                    id="1"
+                    fileUrl="https://storage.googleapis.com/diplomaadmin-a41c3.appspot.com/documents/%C3%90%C2%A5.%20%C3%90%C2%9E%C3%91%C2%87%C3%90%C2%B8%C3%91%C2%80%C3%91%C2%81%C3%92%C2%AF%C3%91%C2%85%20-%20Worki%20CV.pdf?GoogleAccessId=firebase-adminsdk-v6ryy%40diplomaadmin-a41c3.iam.gserviceaccount.com&Expires=1723996800&Signature=xuT31OOp0OM%2FMvXAd6c4VRjM1BCKzzk4Efi7EA%2BCfkFuFwXMZutRcWG1BkI5WwX1nBlC0cPKfuLG%2BinPMhrRdkazoTSVLGWN4TGtYLZv8LOHkCuBkEqSc2gLS70crha2nYlQNJA5xdBkhPhFVo1S6PbpEW3bxxd1Y2nO2bxKK%2BNbrRa1FHyufJZE7sE3ILWwUNrZX710T7k5Qdnr1SCUZ0f5yqEqDIaulELwi0FLvy14%2FFK5BhCmzHbSy1vqfmI0nJpMEfg8nfKQ%2BgbnlpV6suc76g7qS2ifZZBH1Y4yQEgmK4ZgVsgcnc9rAtm4n7oqOqUl1tT2Azze8xJwE36lig%3D%3D"
+                    documentType="oojoo"
+                    title="oojoo"
+                    studentName="oojoo"
+                    studentId="oojoo"
+                    teacherName="oojoo"
+                    rate="oojoo"
+                    layout="vertical"
+                  />
+                  <Documents
+                    id="1"
+                    fileUrl="https://storage.googleapis.com/diplomaadmin-a41c3.appspot.com/documents/%C3%90%C2%A5.%20%C3%90%C2%9E%C3%91%C2%87%C3%90%C2%B8%C3%91%C2%80%C3%91%C2%81%C3%92%C2%AF%C3%91%C2%85%20-%20Worki%20CV.pdf?GoogleAccessId=firebase-adminsdk-v6ryy%40diplomaadmin-a41c3.iam.gserviceaccount.com&Expires=1723996800&Signature=xuT31OOp0OM%2FMvXAd6c4VRjM1BCKzzk4Efi7EA%2BCfkFuFwXMZutRcWG1BkI5WwX1nBlC0cPKfuLG%2BinPMhrRdkazoTSVLGWN4TGtYLZv8LOHkCuBkEqSc2gLS70crha2nYlQNJA5xdBkhPhFVo1S6PbpEW3bxxd1Y2nO2bxKK%2BNbrRa1FHyufJZE7sE3ILWwUNrZX710T7k5Qdnr1SCUZ0f5yqEqDIaulELwi0FLvy14%2FFK5BhCmzHbSy1vqfmI0nJpMEfg8nfKQ%2BgbnlpV6suc76g7qS2ifZZBH1Y4yQEgmK4ZgVsgcnc9rAtm4n7oqOqUl1tT2Azze8xJwE36lig%3D%3D"
+                    documentType="oojoo"
+                    title="oojoo"
+                    studentName="oojoo"
+                    studentId="oojoo"
+                    teacherName="oojoo"
+                    rate="oojoo"
+                    layout="vertical"
+                  /> */}
+              </section>
+            ) : (
+              <section className="w-full flex justify-center items-center mt-10  flex-col gap-2">
+                <FaInbox style={{ fontSize: "40px" }} />
+                <p className="text-md">Бичиг баримт байхгүй байна </p>
+              </section>
+            )}
           </section>
-        </section>
+        }
       </section>
       <section className="lg:w-[30%] w-[40%] lg:flex flex-col  hidden">
         <section className="w-full">

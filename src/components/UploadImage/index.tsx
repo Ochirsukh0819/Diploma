@@ -5,7 +5,6 @@ import Input from "@/components/Input";
 import { BsCloudUpload } from "react-icons/bs";
 
 function UploadImage({ label, inputState, inputSetState }: UploadFileType) {
-  console.log("ladksjjklavdjladfsjlfdsljk: ", inputState);
   return (
     <section className="flex gap-10 mt-4">
       <div className="flex flex-col gap-3">
