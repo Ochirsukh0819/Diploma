@@ -40,7 +40,6 @@ function UserInformation() {
             creationData.studentNumber.toLowerCase()
           );
         });
-        console.log(filterDocumentData);
         const validString = creationData.link;
 
         const splitText = validString.split(",");
