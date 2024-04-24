@@ -1,7 +1,6 @@
 "use client";
 import Navbar from "@/components/Navbar";
 import React, { useState, useEffect } from "react";
-import { FaGithub } from "react-icons/fa";
 import { GiCurledLeaf } from "react-icons/gi";
 import { FaBox, FaInbox } from "react-icons/fa6";
 import Documents from "@/components/Documents";
@@ -9,7 +8,6 @@ import Comments from "@/components/Comment";
 import UserList from "@/components/UserList";
 import CommentDialog from "@/components/CommentDialog";
 import { getCommentId, getCreationId, getDocumentData } from "@/api";
-import { useUser } from "@/context/testContext";
 import { useParams } from "next/navigation";
 import StudentImage from "@/components/StudentImage";
 import loadingImage from "@/assets/images/loading.gif";
