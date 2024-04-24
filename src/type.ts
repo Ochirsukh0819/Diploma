@@ -5,7 +5,7 @@ export interface InputType {
   type: string;
   inputState: any;
   inputSetState: React.Dispatch<React.SetStateAction<any>>;
-  placeholder?: string;
+  isImage?: boolean;
   command?: boolean;
 }
 

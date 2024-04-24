@@ -9,7 +9,6 @@ import { createDocument } from "@/api";
 import { toast } from "react-toastify";
 
 function StudentDocument() {
-  const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([""]);
   const [file, setFile] = useState<File | null>(null);
   const [documentTypeOption, setDocumentTypeOption] = useState(
@@ -23,6 +22,7 @@ function StudentDocument() {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
   const [keyword, setKeyword] = useState(keywords[0].value);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <section className="mt-4">
@@ -50,6 +50,7 @@ function StudentDocument() {
             ) {
               toast.error("Бүх талбараа бөглөнө үү!");
             } else {
+              setIsLoading(true);
               const rate = point + "%";
 
               const res = await createDocument(
@@ -65,7 +66,10 @@ function StudentDocument() {
                 keyword
               );
 
-              if (res === "success") toast.success("Амжилттай бүртгэгдлээ");
+              if (res === "success") {
+                toast.success("Амжилттай бүртгэгдлээ");
+                setIsLoading(false);
+              }
             }
           }}
         >
@@ -79,6 +83,7 @@ function StudentDocument() {
                     type="file"
                     inputState={file}
                     inputSetState={setFile}
+                    isImage={false}
                   />
                 </div>
                 <button
@@ -152,7 +157,11 @@ function StudentDocument() {
             />
           </div>
           <div className="mt-4 flex items-center justify-center ">
-            <Button buttonType="submit" buttonName="Хадгалах" />
+            <Button
+              buttonType="submit"
+              buttonName="Хадгалах"
+              loading={isLoading}
+            />
           </div>
         </form>
       </section>

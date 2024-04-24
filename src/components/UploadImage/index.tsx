@@ -26,6 +26,7 @@ function UploadImage({ label, inputState, inputSetState }: UploadFileType) {
                 type="file"
                 inputState={inputState}
                 inputSetState={inputSetState}
+                isImage={true}
               />
             </div>
             <button

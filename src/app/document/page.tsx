@@ -10,7 +10,10 @@ function Document() {
     async function fetchData() {
       try {
         const result = await getDocumentData();
-        setDocumentData(result);
+        const filterData = result.filter((item: any) => {
+          return item.data.state === "verified";
+        });
+        setDocumentData(filterData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
