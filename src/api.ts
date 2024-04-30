@@ -14,7 +14,7 @@ const DIPLOMA_API_URL = "http://localhost:8080";
 const ML_NLP = "http://172.104.34.197/nlp-web-demo/tts";
 const auth = getAuth(app);
 
-//  User information
+//  User information 
 
 export function getUser(): User | null {
   const user = localStorage.getItem("user");

@@ -92,7 +92,7 @@ function StudentDocument() {
                 >
                   <div className="flex gap-2 items-center justify-center lg:text-lg text-[12px]">
                     {" "}
-                    <p>Бичлэг оруулах</p>
+                    <p>Баримтаа оруулах</p>
                     <IoDocumentAttachOutline style={{ fontSize: "18px" }} />
                   </div>
                 </button>
