@@ -90,9 +90,9 @@ function StudentDocument() {
                   type="button"
                   className=" lg:w-[200px] w-[140px]   p-3 text-white bg-indigo-500 rounded-md"
                 >
-                  <div className="flex gap-2 items-center justify-center lg:text-lg text-[12px]">
+                  <div className="flex gap-2 items-center justify-center lg:text-lg text-[10px]">
                     {" "}
-                    <p>Баримтаа оруулах</p>
+                    <p>Баримт оруулах</p>
                     <IoDocumentAttachOutline style={{ fontSize: "18px" }} />
                   </div>
                 </button>
