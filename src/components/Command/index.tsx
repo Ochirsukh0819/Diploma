@@ -75,7 +75,7 @@ export function CommandDemo() {
             filteredId.map((item: any) => (
               <Link href={`/user/${item.id}`} key={item.id}>
                 <CommandItem className="cursor-pointer px-4 py-2">
-                  {truncateText(item.data.key, 18)}
+                  {truncateText(item.data.key, 25)}
                 </CommandItem>
               </Link>
             ))
