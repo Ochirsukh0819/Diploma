@@ -5,6 +5,7 @@ import Thesis from "@/assets/images/thesis.svg";
 import { AiOutlineSearch } from "react-icons/ai";
 import SearchDialog from "../SearchDiaolog";
 import ButtonDialog from "../ButtonDialog";
+import Link from "next/link";
 
 function Main() {
   return (
@@ -20,6 +21,16 @@ function Main() {
             <span className="font-bold pl-1">нэгдсэн байдлаар</span> харах, мөн
             өөрсдийн бүтээлээ оруулж бусдад хуваалцах боломжтой.
           </p>
+          <Link href="/document">
+            <div className="mt-3">
+              <button className="border-2 border-white/20 text-white bg-[#3364C3] font-semibold text-sm w-fit  flex flex-row items-center gap-2 cursor-pointer rounded-xl  md:py-[0.6rem] md:px-[1rem] md:text-[1.2rem] py-[0.5rem] px-[1.2rem] text-[1.2rem] hover:bg-opacity-90">
+                <p className="text-white font-bold md:text-[1rem] text-[1.2rem]">
+                  Оюутны баримт бичиг
+                </p>
+              </button>
+            </div>
+          </Link>
+          <p>Эсвэл</p>
           <div>
             <ButtonDialog />
           </div>

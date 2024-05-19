@@ -19,6 +19,7 @@ function StudentCreation() {
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([""]);
   const [isOpen, setIsOpen] = useState(false);
+  const [key, setKey] = useState("");
 
   const handleInputChange = (index: any, value: any) => {
     const newInputs = [...links];
@@ -40,6 +41,14 @@ function StudentCreation() {
             inputSetText={setText}
           />
         </section>
+        <div className="w-[50%]">
+          <Input
+            labelName="Бүтээлийн тухай түлхүүр үгс"
+            type="text"
+            inputState={key}
+            inputSetState={setKey}
+          />
+        </div>
 
         <section className="flex flex-col gap-2">
           <h2 className="text-md font-bold">Бүтээлийнхээ холбоосыг оруулах</h2>
@@ -97,18 +106,23 @@ function StudentCreation() {
                     !thirdImage ||
                     !links
                   ) {
+                    console.log("key: ", key);
                     toast.error("Бүх талбараа бөглөнө үү!");
                   } else {
+                    setLoading(true);
                     const response = await createStudentCreation(
                       text,
                       links,
                       image!,
                       secondimage!,
-                      thirdImage!
+                      thirdImage!,
+                      key
                     );
 
-                    if (response === "success")
+                    if (response === "success") {
+                      setLoading(false);
                       toast.success("Амжилттай бүртгэгдлээ");
+                    }
                   }
                 }}
               >

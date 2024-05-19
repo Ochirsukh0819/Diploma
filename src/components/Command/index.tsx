@@ -7,12 +7,12 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-  CommandShortcut,
 } from "@/components/ui/command";
 import React, { useState, useEffect } from "react";
 import { getStudentCreation } from "@/api";
 import { useRequest } from "ahooks";
 import Link from "next/link";
+import { truncateText } from "@/lib/utils";
 
 export function CommandDemo() {
   const [creationData, setCreationData] = useState([]);
@@ -42,15 +42,14 @@ export function CommandDemo() {
     query === ""
       ? []
       : creationData.filter((item: any) => {
-          return item.data.studentNumber
-            .toLowerCase()
-            .includes(query.toLowerCase());
+          if (item.data.key !== undefined)
+            return item.data.key.toLowerCase().includes(query.toLowerCase());
         });
 
   return (
     <Command className="rounded-lg border shadow-md">
       <CommandInput
-        placeholder=" Оюутны дугаар / Оюутны нэрээр хайх"
+        placeholder=" Бүтээлийн нэр / Оюутны нэрээр хайх"
         onChangeCapture={(e: any) => {
           setQuery(e.target.value);
         }}
@@ -71,12 +70,12 @@ export function CommandDemo() {
           )}
         </CommandGroup>
         <CommandSeparator />
-        <CommandGroup heading="Оюутны дугаар">
+        <CommandGroup heading="Бүтээлийн нэр">
           {filteredId.length > 0 ? (
             filteredId.map((item: any) => (
               <Link href={`/user/${item.id}`} key={item.id}>
                 <CommandItem className="cursor-pointer px-4 py-2">
-                  {item.data.studentNumber}
+                  {truncateText(item.data.key, 18)}
                 </CommandItem>
               </Link>
             ))
